@@ -1,0 +1,10 @@
+{  
+  "EventHubConnstring": "@@@EventHubConnstring",
+
+  "Consumer_group": "@@@Consumer_group",
+
+  "EventHub_name": "EventHub_name",  
+  
+  "key" : "value"
+
+ }
