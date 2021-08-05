@@ -2,7 +2,7 @@
     
         "existing_cluster_id": "@@@existing_cluster_id",
         "notebook_task": {
-            "notebook_path": "/Shared/Notebook_test"
+            "notebook_path": "@@@notebook_path"
         },
         "email_notifications": {},
         "name": "@@@name",
