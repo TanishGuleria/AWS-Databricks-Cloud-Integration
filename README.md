@@ -56,9 +56,9 @@ Check the below repo for seting up the AWS configuration for your Databricks wor
 
    - Step 6: start the build 
 
-## powershell script Functionality
+## Powershell script Functionality
 
-### Installing the databricks cli on the agent  
+### Installing databricks cli on build agent  
 ```
 pip install databricks-cli --upgrade
 ```
@@ -80,7 +80,7 @@ Write-Output "`nDatabricks workspace list:"
 
 databricks -v 
 ```
-### updating value of config.json file to be used inside the notebooks 
+### Updating value of config.json file to be used inside the notebooks 
 ```
 
 $EventHubConnstring  = "test"
@@ -96,11 +96,11 @@ $destination_file =  "config_withdata.json"
 
 Get-Content $destination_file
 ```
-### uploadig config.json to dbfs(databricks file system)
+### Uploadig config.json to dbfs(databricks file system)
 ```
 databricks fs cp --overwrite config_withdata.json dbfs:/FileStore/tables/config.json
 ```
-### importing notebook to databrick shared workspace 
+### Importing notebook to databrick shared workspace 
 ```
 databricks workspace import SourceCode/Notebook_test.py //Shared/Notebook_test -l PYTHON -o
 databricks workspace list //Shared
