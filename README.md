@@ -178,8 +178,21 @@ write-host("cluster already exist")
 write-host("cluster id - $cluster_id")
 ```
 ### Creating/Running a notebook job 
-create a .json file with job configuration 
-template for job running on single node standard cluster :-
+ - create a .json file with job configuration  
+ - template for job running on single node standard cluster :-
+```
+{
+    
+        "existing_cluster_id": "@@@existing_cluster_id",
+        "notebook_task": {
+            "notebook_path": "@@@notebook_path"
+        },
+        "email_notifications": {},
+        "name": "@@@name",
+        "max_concurrent_runs": 1
+}
+```
+
 
 ```
 $existing_cluster_id = $cluster_id
