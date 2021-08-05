@@ -62,7 +62,7 @@ Check the below repo for seting up the AWS configuration for your Databricks wor
 ```
 pip install databricks-cli --upgrade
 ```
-
+### Databricks authentication using token 
 ```
 #Databricks authentication using token 
 $DatabricksUrl = 'workspace url'
@@ -80,9 +80,9 @@ Write-Output "`nDatabricks workspace list:"
 
 databricks -v 
 ```
-#------------------------------------------------------
+### updating value of config.json file to be used inside the notebooks 
 ```
-#updating value of config.json file to be used inside the notebooks 
+
 $EventHubConnstring  = "test"
 $Consumer_group = "test"
 $EventHub_name = "test"
@@ -96,16 +96,57 @@ $destination_file =  "config_withdata.json"
 
 Get-Content $destination_file
 ```
+### uploadig config.json to dbfs(databricks file system)
 ```
-#adding config.json to dbfs
 databricks fs cp --overwrite config_withdata.json dbfs:/FileStore/tables/config.json
 ```
-#importing notebook to databrick shared workspace 
+### importing notebook to databrick shared workspace 
+```
 databricks workspace import SourceCode/Notebook_test.py //Shared/Notebook_test -l PYTHON -o
 databricks workspace list //Shared
+```
+### Creating Single node Cluster in databricks workspace
 
-#------------------------------------------------------------------------------------
-#Creating Single node Cluster in databricks workspace  
+create a .json file with cluster configuration 
+
+template for single node cluster with m4 large node type :-
+```
+{
+    "num_workers": 0,
+    "cluster_name": "@@@cluster_name",
+    "spark_version": "8.3.x-scala2.12",
+    "spark_conf": {
+        "spark.master": "local[*, 4]",
+        "spark.databricks.cluster.profile": "singleNode"
+    },
+    "aws_attributes": {
+        "first_on_demand": 1,
+        "availability": "SPOT_WITH_FALLBACK",
+        "zone_id": "@@@zone_id",
+        "instance_profile_arn": null,
+        "spot_bid_price_percent": 100,
+        "ebs_volume_type": "GENERAL_PURPOSE_SSD",
+        "ebs_volume_count": 1,
+        "ebs_volume_size": 100
+    },
+    "node_type_id": "m4.large",
+    " ": "m4.large",
+    "ssh_public_keys": [],
+    "custom_tags": {
+        "ResourceClass": "SingleNode"
+    },
+    "spark_env_vars": {
+        "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+    },
+    "autotermination_minutes": 0,
+    "enable_elastic_disk": true,
+    "cluster_source": "UI",
+    "init_scripts": []
+}
+```
+Updating the json file values and creating it using databricks cli 
+
+```
 $zone_id = "us-west-1b" 
 $cluster_name = "databrick-cluster"
 
@@ -135,8 +176,11 @@ write-host("cluster already exist")
 }
 
 write-host("cluster id - $cluster_id")
+```
+### Creating/Running a notebook job 
+create a .json file with job configuration 
+template for job running on single node standard cluster :-
 
-### Creating a job and running the new notebook job
 ```
 $existing_cluster_id = $cluster_id
 $jobname = "job01"
@@ -175,5 +219,4 @@ $jobid
 $jobid = $jobid | ConvertFrom-Json
 $jobid = $jobid.job_id 
 databricks jobs run-now --job-id $jobid
-
 ```
