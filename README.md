@@ -3,7 +3,7 @@ Complete Integration of Databricks on aws cloud platform with databricks managed
 
 
 ## Note
-Check the below repo for creating the AWS configuration for your Databricks workspaces creation using cloud formation,aws cli and powershell.
+Check the below repo for seting up the AWS configuration for your Databricks workspaces creation using cloud formation,aws cli and powershell.
 - ⚡ (https://github.com/TanishGuleria/Databricks-setup-on-aws)
 
 ## Steps
@@ -58,10 +58,12 @@ Check the below repo for creating the AWS configuration for your Databricks work
 
 ## powershell script Functionality
 
+### Installing the databricks cli on the agent  
 ```
-#Installing the databricks cli on the agent  
 pip install databricks-cli --upgrade
-#--------------------------------------------
+```
+
+```
 #Databricks authentication using token 
 $DatabricksUrl = 'workspace url'
 $dapiToken ='<your token>'
@@ -77,7 +79,9 @@ Write-Output "`nDatabricks workspace list:"
 & databricks workspace list
 
 databricks -v 
+```
 #------------------------------------------------------
+```
 #updating value of config.json file to be used inside the notebooks 
 $EventHubConnstring  = "test"
 $Consumer_group = "test"
@@ -91,9 +95,11 @@ $destination_file =  "config_withdata.json"
     } | Set-Content $destination_file
 
 Get-Content $destination_file
+```
+```
 #adding config.json to dbfs
 databricks fs cp --overwrite config_withdata.json dbfs:/FileStore/tables/config.json
-
+```
 #importing notebook to databrick shared workspace 
 databricks workspace import SourceCode/Notebook_test.py //Shared/Notebook_test -l PYTHON -o
 databricks workspace list //Shared
@@ -129,8 +135,9 @@ write-host("cluster already exist")
 }
 
 write-host("cluster id - $cluster_id")
-#----------------------------------------------------------------------------------------------------------------------------
-#Creating a job and running the new notebook job
+
+### Creating a job and running the new notebook job
+```
 $existing_cluster_id = $cluster_id
 $jobname = "job01"
 $notebook_path = "/Shared/Notebook_test"
