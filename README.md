@@ -32,3 +32,22 @@ Check the below repo for creating the AWS configuration for your Databricks work
      ``` 
      Before you can run CLI commands, you must set up authentication. To authenticate to the CLI you use a Databricks personal access token. (A Databricks username and password are also supported but not recommended.)
     the above code configure the CLI to use a personal access token during code build.
+   - Step 3: Create Create build project using CodeBuild.
+   - Step 4: Specify the project configuration,IAM service role and repository to be used (make sure Iam role has all necessary permission).
+   - Step 5: in buildspec file mentioned the buildspec.yml
+     ```
+     version: 0.2
+     phases:
+        pre_build:
+            commands:
+                - echo starting deployment `date`
+        build:
+            commands:
+                - echo deployment started on `date`
+                - ls
+                - pwsh databrickscli.ps1
+        post_build:
+            commands:
+                - echo Completed...
+     ```
+     This Buildspec file call the databrickscli.ps1 and run the powershell script 
