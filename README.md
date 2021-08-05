@@ -17,16 +17,18 @@ Check the below repo for creating the AWS configuration for your Databricks work
     update the value with your own databrick url and token in databrickscli.ps1 file
      ```
      pip install databricks-cli --upgrade
-$DatabricksUrl = 'Your workspace Url'
-$dapiToken ='update the token'
+    $DatabricksUrl = 'Your workspace Url'
+    $dapiToken ='update the token'
 
-$args = @"
-$DatabricksUrl
-$dapiToken
-"@
+    $args = @"
+    $DatabricksUrl
+    $dapiToken
+    "@
 
-Write-Output $args | & databricks configure --token 
+    Write-Output $args | & databricks configure --token 
 
-Write-Output "`nDatabricks workspace list:"
-& databricks workspace list
+    Write-Output "`nDatabricks workspace list:"
+    & databricks workspace list
      ``` 
+     Before you can run CLI commands, you must set up authentication. To authenticate to the CLI you use a Databricks personal access token. (A Databricks username and password are also supported but not recommended.)
+    the above code configure the CLI to use a personal access token during code build.
